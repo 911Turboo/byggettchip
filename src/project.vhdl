@@ -68,13 +68,14 @@ begin
     process (clk, rst_n)
         variable tmp : unsigned(3 downto 0); 
     begin
-        if ui_in(5) = '1' then
-            counter <= to_unsigned(0, 4); 
-            counter_running <= '1';
-            dataROM <= ROM_content(to_integer(unsigned(addressROM)));
-        end if;
-
         if rising_edge(clk) then
+
+            if ui_in(5) = '1' then
+                counter <= to_unsigned(0, 4); 
+                counter_running <= '1';
+                dataROM <= ROM_content(to_integer(unsigned(addressROM)));
+            end if;
+
             if (counter_running = '1') then            
 
                 counter <= counter - to_unsigned(1, 4);
