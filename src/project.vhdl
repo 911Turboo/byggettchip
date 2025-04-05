@@ -74,15 +74,17 @@ begin
             dataROM <= ROM_content(to_integer(unsigned(addressROM)));
         end if;
 
-        if rising_edge(clk) and (counter_running = '1') then            
+        if rising_edge(clk) then
+            if (counter_running = '1') then            
 
-            counter <= counter - to_unsigned(1, 4);
+                counter <= counter - to_unsigned(1, 4);
 
-            tmp := counter - "0001";
-            if dataROM(to_integer(counter)) = '0' and dataROM(to_integer(tmp)) = '0' then
-                counter <= to_unsigned(0, 4);
-                counter_running <= '0';
-                dataROM <= ROM_content(0);
+                tmp := counter - "0001";
+                if dataROM(to_integer(counter)) = '0' and dataROM(to_integer(tmp)) = '0' then
+                    counter <= to_unsigned(0, 4);
+                    counter_running <= '0';
+                    dataROM <= ROM_content(0);
+                end if;
             end if; 
 
         end if;
