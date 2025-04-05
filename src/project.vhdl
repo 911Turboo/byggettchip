@@ -92,6 +92,9 @@ begin
     end process;
 
     uo_out(0) <= dataROM(to_integer(counter));
+    uo_out(7 downto 1) <= "0000000";
+    uio_out(7 downto 0) <= "00000000";
+    uio_oe(7 downto 0) <= "00000000";
     --uo_out(1) <= dataROM(15);
     --uo_out(15 downto 1) <= 0;
 
