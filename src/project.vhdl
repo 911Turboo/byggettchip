@@ -66,6 +66,7 @@ begin
     --dataROM <= ROM_content(to_integer(unsigned(addressROM)));
 
     process (clk, rst_n)
+        variable tmp : unsigned(3 downto 0); 
     begin
         if ui_in(5) = '1' then
             counter <= to_unsigned(0, 4); 
@@ -77,7 +78,8 @@ begin
 
             counter <= counter - to_unsigned(1, 4);
 
-            if (to_integer(dataROM(to_integer(counter))) = 0) and to_integer((dataROM(to_integer(counter - "0001"))) = 0) then
+            tmp := counter - "0001";
+            if dataROM(to_integer(counter)) = '0' and dataROM(to_integer(tmp)) = '0' then
                 counter <= to_unsigned(0, 4);
                 counter_running <= '0';
                 dataROM <= ROM_content(0);
