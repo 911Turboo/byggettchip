@@ -77,7 +77,7 @@ begin
 
             counter <= counter - to_unsigned(1, 4);
 
-            if (to_integer(dataROM(to_integer(counter))) = 0) and to_integer((dataROM(to_integer(counter - to_unsigned(1, 4)))) = 0) then
+            if (to_integer(dataROM(to_integer(counter))) = 0) and to_integer((dataROM(to_integer(counter - "0001"))) = 0) then
                 counter <= to_unsigned(0, 4);
                 counter_running <= '0';
                 dataROM <= ROM_content(0);
