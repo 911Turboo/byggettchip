@@ -65,20 +65,14 @@ begin
     addressROM <= ui_in(4 downto 0);
     --dataROM <= ROM_content(to_integer(unsigned(addressROM)));
 
-    process (clk, ui_in)
-    begin
-        
-        if ui_in(5) = '1' then
-                counter <= to_unsigned(0, 4); 
-                counter_running <= '1';
-                dataROM <= ROM_content(to_integer(unsigned(addressROM)));
-            end if;
-    end process;
-
     process (clk, rst_n)
         variable tmp : unsigned(3 downto 0); 
     begin
-        
+        if ui_in(5) = '1' then
+            counter <= to_unsigned(0, 4); 
+            counter_running <= '1';
+            dataROM <= ROM_content(to_integer(unsigned(addressROM)));
+        end if;
 
         if rising_edge(clk) then
             if (counter_running = '1') then            
