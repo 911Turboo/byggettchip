@@ -61,25 +61,25 @@ architecture Behavioral of tt_um_supreme_meme is
 begin
 
     
-    uo_out(7 downto 1) <= "0";
+    uo_out(7 downto 1) <= '0';
     addressROM <= ui_in(4 downto 0);
     --dataROM <= ROM_content(to_integer(unsigned(addressROM)));
 
     process (clk, rst_n)
     begin
-        if ui_in(5) = "1" then
+        if ui_in(5) = '1' then
             counter <= to_unsigned(0, 4); 
-            counter_running <= "1";
+            counter_running <= '1';
             dataROM <= ROM_content(to_integer(unsigned(addressROM)));
         end if;
 
-        if rising_edge(clk) and counter_running = "1" then            
+        if rising_edge(clk) and (counter_running = '1') then            
 
             counter <= counter - to_unsigned(1, 4);
 
             if dataROM(to_integer(counter)) = to_unsigned(0, 16) and dataROM(to_integer(counter - to_unsigned(1, 4))) = to_unsigned(0, 16) then
                 counter <= to_unsigned(0, 4);
-                counter_running <= "0";
+                counter_running <= '0';
                 dataROM <= ROM_content(0);
             end if; 
 
