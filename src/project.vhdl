@@ -17,10 +17,10 @@ end tt_um_supreme_meme;
 
 architecture Behavioral of tt_um_supreme_meme is
 
-    signal counter : unsigned(3 downto 0) := (others => 0);
+    signal counter : unsigned(3 downto 0) := (others => '0');
     signal addressROM : std_logic_vector(4 downto 0);
-    signal dataROM : std_logic_vector(15 downto 0) := (others => 0);
-    signal counter_running : std_logic := 0;
+    signal dataROM : std_logic_vector(15 downto 0) := (others => '0');
+    signal counter_running : std_logic := '0';
 
     type ROM is array (0 to 29) of std_logic_vector(15 downto 0);
     constant ROM_content : ROM := (
@@ -61,7 +61,7 @@ architecture Behavioral of tt_um_supreme_meme is
 begin
 
     
-    uo_out(7 downto 1) <= '0';
+    uo_out(7 downto 1) <= to_unsigned(0, 7);
     addressROM <= ui_in(4 downto 0);
     --dataROM <= ROM_content(to_integer(unsigned(addressROM)));
 
@@ -77,7 +77,7 @@ begin
 
             counter <= counter - to_unsigned(1, 4);
 
-            if dataROM(to_integer(counter)) = to_unsigned(0, 16) and dataROM(to_integer(counter - to_unsigned(1, 4))) = to_unsigned(0, 16) then
+            if (dataROM(to_integer(counter)) = to_unsigned(0, 16)) and (dataROM(to_integer(counter - to_unsigned(1, 4))) = to_unsigned(0, 16)) then
                 counter <= to_unsigned(0, 4);
                 counter_running <= '0';
                 dataROM <= ROM_content(0);
