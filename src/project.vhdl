@@ -64,31 +64,32 @@ begin
     uo_out(7 downto 1) <= "0000000";
     addressROM <= ui_in(4 downto 0);
     --dataROM <= ROM_content(to_integer(unsigned(addressROM)));
-
-    process (clk, rst_n)
-        variable tmp : unsigned(3 downto 0); 
+    process(clk)
     begin
         if rising_edge(clk) then
-
             if ui_in(5) = '1' then
                 counter <= to_unsigned(0, 4); 
                 counter_running <= '1';
                 dataROM <= ROM_content(to_integer(unsigned(addressROM)));
             end if;
-
-            if (counter_running = '1') then            
-
-                counter <= counter - to_unsigned(1, 4);
-
-                tmp := counter - "0001";
-                if dataROM(to_integer(counter)) = '0' and dataROM(to_integer(tmp)) = '0' then
-                    counter <= to_unsigned(0, 4);
-                    counter_running <= '0';
-                    dataROM <= ROM_content(0);
-                end if;
-            end if; 
         end if;
-    --wait until ena_intern = 1;
+    end process;
+
+    process (clk, rst_n)
+        variable tmp : unsigned(3 downto 0); 
+    begin
+        if rising_edge(clk) then
+            if (counter_running = '1') then            
+                counter <= counter - to_unsigned(1, 4);
+            end if; 
+
+            tmp := counter - "0001";
+            if dataROM(to_integer(counter)) = '0' and dataROM(to_integer(tmp)) = '0' then
+                counter <= to_unsigned(0, 4);
+                counter_running <= '0';
+                dataROM <= ROM_content(0);
+            end if;
+        end if;
     end process;
 
     uo_out(0) <= dataROM(to_integer(counter));
